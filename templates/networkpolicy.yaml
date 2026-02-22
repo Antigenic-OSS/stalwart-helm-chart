@@ -1,0 +1,55 @@
+{{- if .Values.networkPolicy.enabled }}
+{{- $hasSameNamespace := .Values.networkPolicy.ingress.allowSameNamespace }}
+{{- $allowInternet := .Values.networkPolicy.ingress.allowInternet }}
+{{- $hasAdditionalFrom := gt (len .Values.networkPolicy.ingress.additionalFrom) 0 }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "stalwart.fullname" . }}
+  labels:
+    {{- include "stalwart.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "stalwart.selectorLabels" . | nindent 6 }}
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - {{- if or $hasSameNamespace $allowInternet $hasAdditionalFrom }}
+      from:
+        {{- if $hasSameNamespace }}
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ .Release.Namespace | quote }}
+        {{- end }}
+        {{- if $allowInternet }}
+        {{- range .Values.networkPolicy.ingress.internetCidrs }}
+        - ipBlock:
+            cidr: {{ . | quote }}
+        {{- end }}
+        {{- end }}
+        {{- with .Values.networkPolicy.ingress.additionalFrom }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- end }}
+      ports:
+        - protocol: TCP
+          port: 8080
+        - protocol: TCP
+          port: 443
+        - protocol: TCP
+          port: 25
+        - protocol: TCP
+          port: 587
+        - protocol: TCP
+          port: 465
+        - protocol: TCP
+          port: 143
+        - protocol: TCP
+          port: 993
+        - protocol: TCP
+          port: 4190
+  egress:
+    - {}
+{{- end }}
