@@ -1,15 +1,34 @@
 apiVersion: v2
 name: antigenic-stalwart-helm-chart
-description: Unofficial, highly opinionated community-maintained Stalwart mail server Helm chart by Antigenic.
+description: Community-maintained Helm chart for deploying the Stalwart Mail Server on Kubernetes with SMTP, IMAP, JMAP, PostgreSQL, Redis, S3-compatible object storage, and Meilisearch.
 type: application
 version: 1.0.0
 appVersion: "v0.15.5"
 keywords:
   - mail
+  - email
+  - email-server
   - stalwart
+  - stalwart-mail-server
+  - mta
+  - msa
   - smtp
+  - submission
+  - smtps
   - imap
+  - imaps
+  - sieve
+  - managesieve
   - jmap
+  - kubernetes
+  - helm
+  - ingress
+  - gateway-api
+  - cert-manager
+  - postgresql
+  - redis
+  - s3
+  - meilisearch
 home: https://github.com/Antigenic-OSS/stalwart-helm-chart
 icon: https://github.com/Antigenic-OSS.png
 sources:

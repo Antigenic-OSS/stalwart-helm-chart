@@ -9,7 +9,9 @@
 [![Kubernetes](https://img.shields.io/badge/kubernetes-supported-326CE5)](https://kubernetes.io/)
 [![Artifact Hub](https://img.shields.io/badge/artifact%20hub-listing%20pending-orange)](https://artifacthub.io/)
 
-Highly opinionated, Stalwart mail server deployment.
+Community-maintained, highly opinionated Helm chart for deploying the Stalwart Mail Server on Kubernetes.
+
+Supports SMTP, IMAP, JMAP, PostgreSQL, Redis, S3-compatible object storage, Meilisearch, cert-manager TLS, and either Ingress, Gateway API, or a single LoadBalancer service.
 
 This repository is maintained by [Antigenic](https://antigenic.org).
 
