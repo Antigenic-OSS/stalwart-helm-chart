@@ -26,7 +26,9 @@ This is an unofficial, community-maintained Helm chart and is not affiliated wit
   - [Release Automation](#release-automation)
 - [Before You Deploy](#before-you-deploy)
   - [Assumptions and Expectations](#assumptions-and-expectations)
-  - [PostgreSQL Bootstrap Migration (External DB)](#postgresql-bootstrap-migration-external-db)
+  - [Directory Modes](#directory-modes)
+  - [PostgreSQL Permissions](#postgresql-permissions)
+  - [Optional: SQL Directory Mode](#optional-sql-directory-mode)
   - [External Secrets](#external-secrets)
 - [GitOps Examples](#gitops-examples)
   - [Argo CD Example](#argo-cd-example)
@@ -124,11 +126,36 @@ Chart behavior assumptions:
 - `cluster.node-id` is auto-assigned from StatefulSet pod ordinal via init container.
 - Replica count defaults to `3`; ensure your external backing services and storage can support HA.
 
-### PostgreSQL Bootstrap Migration (External DB)
+### Directory Modes
 
-This chart assumes PostgreSQL is externally managed. It does not run in-cluster schema migrations.
+This chart supports two directory modes:
 
-Before deploying, run the idempotent bootstrap SQL against your PostgreSQL database:
+- `internal` (default): `storage.directory=internal` with `directory."internal"` backed by PostgreSQL. Stalwart manages its own internal tables automatically.
+- `sql` (optional): `storage.directory=sql` with explicit SQL directory queries. You own schema/migrations/query behavior.
+
+### PostgreSQL Permissions
+
+This chart assumes PostgreSQL is externally managed.
+
+For `internal` mode (default), no chart-managed schema bootstrap is required for directory data. Ensure the configured PostgreSQL user has sufficient permissions for Stalwart-managed DDL and DML in the target database/schema (for example `CREATE`, `ALTER`, `INDEX`, `INSERT`, `UPDATE`, `DELETE`, `SELECT`).
+
+### Optional: SQL Directory Mode
+
+Use this only if you intentionally want SQL directory mode.
+
+Set:
+
+```yaml
+config:
+  storage:
+    directory: sql
+```
+
+In SQL mode, you must manage directory schema/migrations yourself and provide appropriate SQL queries.
+
+The SQL query mappings under `config.postgresql.query` in this chart are examples based on Stalwart documentation and are not universally required for all deployments. Adjust them to your schema and Stalwart version requirements.
+
+Example starter schema (for SQL directory mode only):
 
 ```sql
 CREATE TABLE IF NOT EXISTS accounts (
@@ -229,7 +256,7 @@ Default backend choices in this chart:
 - S3-compatible storage for blobs (`storage.blob = s3`).
 - Redis for lookup paths (`storage.lookup = redis`).
 - Meilisearch for full-text indexing/search (`storage.fts = meilisearch`).
-- Internal directory backed by PostgreSQL (`storage.directory = internal`).
+- Default INTERNAL directory backed by PostgreSQL (`storage.directory = internal`); optional SQL directory mode is available when explicitly set.
 
 What this gives you:
 
@@ -238,6 +265,7 @@ What this gives you:
 - Fast coordination/lookup via Redis.
 - External search engine performance for message search workloads.
 - Clear config split: one Secret for sensitive values, ConfigMap for everything else.
+- Flexibility to switch to SQL directory mode when you explicitly need custom directory schema/query behavior.
 
 ### Minimal Production Overrides
 

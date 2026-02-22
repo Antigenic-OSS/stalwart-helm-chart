@@ -94,11 +94,13 @@ data:
     [store."postgresql".pool]
     max-connections = {{ .Values.config.postgresql.pool.maxConnections }}
 
+    {{- if eq .Values.config.storage.directory "sql" }}
     [store."postgresql".query]
     name = {{ .Values.config.postgresql.query.name | quote }}
     members = {{ .Values.config.postgresql.query.members | quote }}
     recipients = {{ .Values.config.postgresql.query.recipients | quote }}
     emails = {{ .Values.config.postgresql.query.emails | quote }}
+    {{- end }}
 
     [store."s3"]
     type = "s3"
@@ -135,9 +137,15 @@ data:
     urls = "%{env:REDIS_URL}%"
     timeout = {{ .Values.config.redis.timeout | quote }}
 
+    {{- if eq .Values.config.storage.directory "internal" }}
     [directory."internal"]
     type = "internal"
-    store = {{ .Values.config.directory.internalStore | quote }}
+    store = "postgresql"
+    {{- else if eq .Values.config.storage.directory "sql" }}
+    [directory."sql"]
+    type = "sql"
+    store = "postgresql"
+    {{- end }}
 
     [tracer."log"]
     type = {{ .Values.config.tracer.log.type | quote }}

@@ -31,6 +31,23 @@
 {{- if regexMatch "^https?://" .Values.config.http.url -}}
 {{- fail "config.http.url must be a Stalwart expression string (for example: protocol + '://' + config_get('server.hostname') + ':' + local_port), not a plain https URL." -}}
 {{- end -}}
+{{- if and (ne .Values.config.storage.directory "internal") (ne .Values.config.storage.directory "sql") -}}
+{{- fail "config.storage.directory must be either internal (default) or sql." -}}
+{{- end -}}
+{{- if eq .Values.config.storage.directory "sql" -}}
+  {{- if not (default "" .Values.config.postgresql.query.name) -}}
+  {{- fail "config.postgresql.query.name is required when config.storage.directory=sql." -}}
+  {{- end -}}
+  {{- if not (default "" .Values.config.postgresql.query.members) -}}
+  {{- fail "config.postgresql.query.members is required when config.storage.directory=sql." -}}
+  {{- end -}}
+  {{- if not (default "" .Values.config.postgresql.query.recipients) -}}
+  {{- fail "config.postgresql.query.recipients is required when config.storage.directory=sql." -}}
+  {{- end -}}
+  {{- if not (default "" .Values.config.postgresql.query.emails) -}}
+  {{- fail "config.postgresql.query.emails is required when config.storage.directory=sql." -}}
+  {{- end -}}
+{{- end -}}
 {{- if contains "%{BASE_PATH}%" .Values.config.tracer.log.path -}}
 {{- fail "config.tracer.log.path must be an absolute path (for example /opt/stalwart/logs). %{BASE_PATH}% is not supported here." -}}
 {{- end -}}

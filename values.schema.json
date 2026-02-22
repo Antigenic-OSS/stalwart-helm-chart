@@ -165,6 +165,16 @@
             }
           }
         },
+        "storage": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "directory": {
+              "type": "string",
+              "enum": ["internal", "sql"]
+            }
+          }
+        },
         "proxy": {
           "type": "object",
           "additionalProperties": true,

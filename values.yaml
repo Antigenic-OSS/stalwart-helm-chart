@@ -213,6 +213,9 @@ config:
       maxConnections: 20
     purge:
       frequency: "0 0 *"
+    # SQL directory mode only (config.storage.directory=sql):
+    # These query strings are examples adapted from Stalwart documentation and may need
+    # adjustments for your schema and operational model.
     query:
       name: "SELECT name, type, secret, description, quota FROM accounts WHERE name = $1 AND active = true"
       members: "SELECT member_of FROM group_members WHERE name = $1"
@@ -240,9 +243,6 @@ config:
 
   redis:
     timeout: 10s
-
-  directory:
-    internalStore: postgresql
 
   tracer:
     log:
