@@ -7,7 +7,7 @@
 [![License](https://img.shields.io/github/license/Antigenic-OSS/stalwart-helm-chart)](https://github.com/Antigenic-OSS/stalwart-helm-chart/blob/main/LICENSE)
 [![Helm](https://img.shields.io/badge/helm-v3-blueviolet)](https://helm.sh/)
 [![Kubernetes](https://img.shields.io/badge/kubernetes-supported-326CE5)](https://kubernetes.io/)
-[![Artifact Hub](https://img.shields.io/badge/artifact%20hub-listing%20pending-orange)](https://artifacthub.io/)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/antigenic-stalwart-helm-chart)](https://artifacthub.io/packages/search?repo=antigenic-stalwart-helm-chart)
 
 Community-maintained, highly opinionated Helm chart for deploying the Stalwart Mail Server on Kubernetes.
 
