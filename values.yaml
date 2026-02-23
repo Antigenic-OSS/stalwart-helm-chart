@@ -187,7 +187,8 @@ config:
     url: "protocol + '://' + config_get('server.hostname') + ':' + local_port"
     useXForwarded: false
     headers:
-      - "Cache-Control: max-age=3600"
+      - "Cache-Control: no-store"
+      - "Pragma: no-cache"
       - "Server: Stalwart"
 
   cluster:
