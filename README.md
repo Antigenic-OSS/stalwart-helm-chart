@@ -547,6 +547,19 @@ service:
       load-balancer.hetzner.cloud/type: "lb21"
 ```
 
+Hetzner health check note (HTTPS-only mode):
+
+- This applies when plain HTTP is disabled (`service.http.enabled=false`).
+- In that mode, Hetzner health checks may remain unhealthy unless the LB check protocol is set to HTTPS.
+- Set:
+
+```yaml
+service:
+  mail:
+    annotations:
+      load-balancer.hetzner.cloud/health-check-protocol: "https"
+```
+
 Per-listener trusted networks (optional override):
 
 ```yaml
