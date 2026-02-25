@@ -37,10 +37,11 @@
           "type": "object",
           "additionalProperties": true,
           "properties": {
+            "enabled": { "type": "boolean" },
             "port": { "type": "integer", "minimum": 1, "maximum": 65535 },
             "targetPort": { "type": ["integer", "string"] }
           },
-          "required": ["port", "targetPort"]
+          "required": ["enabled", "port", "targetPort"]
         },
         "mail": {
           "type": "object",

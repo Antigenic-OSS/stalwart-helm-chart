@@ -32,6 +32,7 @@ data:
     {{- $hasHttpGroup := hasKey .Values.config.proxy.byService "http" }}
     {{- $hasMailGroup := hasKey .Values.config.proxy.byService "mail" }}
     {{ range $name := $listenerNames }}
+    {{- if not (and (eq $name "http") (not $.Values.service.http.enabled)) }}
     {{- $listener := index $.Values.config.listeners $name }}
     {{- $listenerHasOverride := hasKey $listener "trustedNetworks" }}
     {{- $listenerTrustedNetworks := default (list) $.Values.config.proxy.trustedNetworks }}
@@ -58,6 +59,7 @@ data:
     trusted-networks = [{{- range $i, $v := $listenerTrustedNetworks }}{{ if $i }}, {{ end }}{{ $v | quote }}{{- end }}]
     {{- end }}
 
+    {{- end }}
     {{ end }}
     [http]
     url = {{ .Values.config.http.url | quote }}

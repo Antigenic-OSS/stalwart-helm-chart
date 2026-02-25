@@ -66,8 +66,10 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           ports:
+            {{- if .Values.service.http.enabled }}
             - name: http
               containerPort: 8080
+            {{- end }}
             - name: https
               containerPort: 443
             - name: smtp
@@ -89,13 +91,28 @@ spec:
           env:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- $livenessProbe := mustDeepCopy .Values.livenessProbe }}
+          {{- if and (not .Values.service.http.enabled) (hasKey $livenessProbe "httpGet") }}
+          {{- $_ := set $livenessProbe.httpGet "port" 443 }}
+          {{- $_ := set $livenessProbe.httpGet "scheme" "HTTPS" }}
+          {{- end }}
           livenessProbe:
-            {{- toYaml .Values.livenessProbe | nindent 12 }}
+            {{- toYaml $livenessProbe | nindent 12 }}
+          {{- $readinessProbe := mustDeepCopy .Values.readinessProbe }}
+          {{- if and (not .Values.service.http.enabled) (hasKey $readinessProbe "httpGet") }}
+          {{- $_ := set $readinessProbe.httpGet "port" 443 }}
+          {{- $_ := set $readinessProbe.httpGet "scheme" "HTTPS" }}
+          {{- end }}
           readinessProbe:
-            {{- toYaml .Values.readinessProbe | nindent 12 }}
+            {{- toYaml $readinessProbe | nindent 12 }}
           {{- with .Values.startupProbe }}
+          {{- $startupProbe := mustDeepCopy . }}
+          {{- if and (not $.Values.service.http.enabled) (hasKey $startupProbe "httpGet") }}
+          {{- $_ := set $startupProbe.httpGet "port" 443 }}
+          {{- $_ := set $startupProbe.httpGet "scheme" "HTTPS" }}
+          {{- end }}
           startupProbe:
-            {{- toYaml . | nindent 12 }}
+            {{- toYaml $startupProbe | nindent 12 }}
           {{- end }}
           {{- with .Values.resources }}
           resources:

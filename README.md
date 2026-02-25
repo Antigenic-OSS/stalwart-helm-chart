@@ -361,7 +361,9 @@ Hostname routing is still separate by protocol:
 Both routing planes must be configured:
 
 - Mail routing must reach the `*-mail` Service (`25`, `587`, `465`, `143`, `993`, `4190`).
-- HTTP routing must also reach the same `*-mail` Service on `service.http.port` (`8080` by default).
+- HTTP routing can use either:
+  - plain HTTP on `service.http.port` (`8080` by default, when `service.http.enabled=true`), or
+  - HTTPS on `443` only (when `service.http.enabled=false`).
 
 If only one is routed, deployment is only partially reachable.
 
@@ -404,6 +406,17 @@ httpRoute:
 ```
 
 Or disable both and expose the built-in unified `LoadBalancer` Service (`*-mail`) directly for both HTTP and mail traffic.
+
+To disable plain HTTP (`8080`) completely and serve only HTTPS:
+
+```yaml
+service:
+  http:
+    enabled: false
+```
+
+When `service.http.enabled=false`, this chart removes port `8080` from listeners/services/policies and health checks are performed over HTTPS (`443`).
+`ingress.enabled=true` and `httpRoute.enabled=true` require `service.http.enabled=true` because they route to the plain HTTP backend service port.
 
 ### TLS Model (Typical Production)
 
@@ -517,7 +530,8 @@ service:
       sieve: true
 ```
 
-This chart also exposes HTTP (`service.http.port`) and HTTPS (`443`) on the same Service.
+By default this chart exposes HTTP (`service.http.port`) and HTTPS (`443`) on the same Service.
+Set `service.http.enabled=false` to remove HTTP (`8080`) entirely.
 For Hetzner users, this often exceeds `lb11` listener capacity; use:
 
 ```yaml

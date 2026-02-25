@@ -46,9 +46,11 @@ spec:
       port: {{ .Values.service.mail.ports.sieve }}
       targetPort: sieve
     {{- end }}
+    {{- if .Values.service.http.enabled }}
     - name: http
       port: {{ .Values.service.http.port }}
       targetPort: {{ .Values.service.http.targetPort }}
+    {{- end }}
     - name: https
       port: 443
       targetPort: 443

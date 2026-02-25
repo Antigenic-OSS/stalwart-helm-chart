@@ -13,6 +13,14 @@ spec:
     - name: wget
       image: "{{ .Values.testConnection.image.repository }}:{{ .Values.testConnection.image.tag }}"
       imagePullPolicy: {{ .Values.testConnection.image.pullPolicy }}
-      command: ['sh', '-c', 'wget -qO- "http://{{ include "stalwart.httpServiceName" . }}:{{ .Values.service.http.port }}/healthz/ready"']
+      command:
+        - sh
+        - -c
+        - |
+          {{- if .Values.service.http.enabled }}
+          wget -qO- "http://{{ include "stalwart.httpServiceName" . }}:{{ .Values.service.http.port }}/healthz/ready"
+          {{- else }}
+          wget --no-check-certificate -qO- "https://{{ include "stalwart.httpServiceName" . }}:443/healthz/ready"
+          {{- end }}
   restartPolicy: Never
 {{- end }}

@@ -2,7 +2,7 @@ apiVersion: v2
 name: antigenic-stalwart-helm-chart
 description: Community-maintained Helm chart for deploying the Stalwart Mail Server on Kubernetes with SMTP, IMAP, JMAP, PostgreSQL, Redis, S3-compatible object storage, and Meilisearch.
 type: application
-version: 1.0.2
+version: 1.0.3
 appVersion: "v0.15.5"
 keywords:
   - mail

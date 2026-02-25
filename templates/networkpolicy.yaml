@@ -34,8 +34,10 @@ spec:
         {{- end }}
       {{- end }}
       ports:
+        {{- if .Values.service.http.enabled }}
         - protocol: TCP
           port: 8080
+        {{- end }}
         - protocol: TCP
           port: 443
         - protocol: TCP

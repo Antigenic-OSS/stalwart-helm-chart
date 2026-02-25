@@ -10,6 +10,11 @@ spec:
   selector:
     {{- include "stalwart.selectorLabels" . | nindent 4 }}
   ports:
+    {{- if .Values.service.http.enabled }}
     - name: http
       port: {{ .Values.service.http.port }}
       targetPort: {{ .Values.service.http.targetPort }}
+    {{- end }}
+    - name: https
+      port: 443
+      targetPort: 443

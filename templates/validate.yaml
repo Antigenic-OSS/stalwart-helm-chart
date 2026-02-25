@@ -10,6 +10,12 @@
 {{- if and .Values.httpRoute.enabled (eq (len .Values.httpRoute.hostnames) 0) -}}
 {{- fail "httpRoute.hostnames must include at least one hostname when httpRoute.enabled is true." -}}
 {{- end -}}
+{{- if and .Values.ingress.enabled (not .Values.service.http.enabled) -}}
+{{- fail "ingress.enabled=true requires service.http.enabled=true because Ingress routes to the plain HTTP backend service port." -}}
+{{- end -}}
+{{- if and .Values.httpRoute.enabled (not .Values.service.http.enabled) -}}
+{{- fail "httpRoute.enabled=true requires service.http.enabled=true because HTTPRoute routes to the plain HTTP backend service port." -}}
+{{- end -}}
 {{- if and .Values.config.metrics.prometheus.enable (not .Values.config.metrics.prometheus.auth.username) -}}
 {{- fail "config.metrics.prometheus.auth.username is required when Prometheus metrics are enabled." -}}
 {{- end -}}
@@ -62,7 +68,7 @@
 {{- end -}}
 {{- $isHetznerLB := hasKey .Values.service.mail.annotations "load-balancer.hetzner.cloud/name" -}}
 {{- $hetznerType := index .Values.service.mail.annotations "load-balancer.hetzner.cloud/type" | default "" -}}
-{{- $listenerCount := add $enabledMailPorts 2 -}}
+{{- $listenerCount := add $enabledMailPorts (ternary 2 1 .Values.service.http.enabled) -}}
 {{- if and (eq .Values.service.mail.type "LoadBalancer") $isHetznerLB (eq $hetznerType "lb11") (gt $listenerCount 5) -}}
 {{- fail "Unified mail+http service uses mail listeners plus HTTP+HTTPS. For Hetzner, lb11 is insufficient for this port set; use load-balancer.hetzner.cloud/type=lb21 or reduce enabled ports." -}}
 {{- end -}}
