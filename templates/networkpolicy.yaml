@@ -40,18 +40,30 @@ spec:
         {{- end }}
         - protocol: TCP
           port: 443
+        {{- if .Values.service.mail.enabled.smtp }}
         - protocol: TCP
           port: 25
+        {{- end }}
+        {{- if .Values.service.mail.enabled.submission }}
         - protocol: TCP
           port: 587
+        {{- end }}
+        {{- if .Values.service.mail.enabled.smtps }}
         - protocol: TCP
           port: 465
+        {{- end }}
+        {{- if .Values.service.mail.enabled.imap }}
         - protocol: TCP
           port: 143
+        {{- end }}
+        {{- if .Values.service.mail.enabled.imaps }}
         - protocol: TCP
           port: 993
+        {{- end }}
+        {{- if .Values.service.mail.enabled.sieve }}
         - protocol: TCP
           port: 4190
+        {{- end }}
   egress:
     - {}
 {{- end }}

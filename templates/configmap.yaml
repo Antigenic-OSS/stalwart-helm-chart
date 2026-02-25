@@ -32,7 +32,29 @@ data:
     {{- $hasHttpGroup := hasKey .Values.config.proxy.byService "http" }}
     {{- $hasMailGroup := hasKey .Values.config.proxy.byService "mail" }}
     {{ range $name := $listenerNames }}
-    {{- if not (and (eq $name "http") (not $.Values.service.http.enabled)) }}
+    {{- $includeListener := true }}
+    {{- if and (eq $name "http") (not $.Values.service.http.enabled) }}
+    {{- $includeListener = false }}
+    {{- end }}
+    {{- if and (eq $name "smtp") (not $.Values.service.mail.enabled.smtp) }}
+    {{- $includeListener = false }}
+    {{- end }}
+    {{- if and (eq $name "submission") (not $.Values.service.mail.enabled.submission) }}
+    {{- $includeListener = false }}
+    {{- end }}
+    {{- if and (eq $name "submissions") (not $.Values.service.mail.enabled.smtps) }}
+    {{- $includeListener = false }}
+    {{- end }}
+    {{- if and (eq $name "imap") (not $.Values.service.mail.enabled.imap) }}
+    {{- $includeListener = false }}
+    {{- end }}
+    {{- if and (eq $name "imaps") (not $.Values.service.mail.enabled.imaps) }}
+    {{- $includeListener = false }}
+    {{- end }}
+    {{- if and (eq $name "sieve") (not $.Values.service.mail.enabled.sieve) }}
+    {{- $includeListener = false }}
+    {{- end }}
+    {{- if $includeListener }}
     {{- $listener := index $.Values.config.listeners $name }}
     {{- $listenerHasOverride := hasKey $listener "trustedNetworks" }}
     {{- $listenerTrustedNetworks := default (list) $.Values.config.proxy.trustedNetworks }}

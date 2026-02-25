@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: ghcr.io/antigenic-oss/charts
     chart: antigenic-stalwart-helm-chart
-    targetRevision: 1.0.3
+    targetRevision: 1.0.4
     helm:
       releaseName: stalwart
       values: |

@@ -72,18 +72,30 @@ spec:
             {{- end }}
             - name: https
               containerPort: 443
+            {{- if .Values.service.mail.enabled.smtp }}
             - name: smtp
               containerPort: 25
+            {{- end }}
+            {{- if .Values.service.mail.enabled.submission }}
             - name: submission
               containerPort: 587
+            {{- end }}
+            {{- if .Values.service.mail.enabled.smtps }}
             - name: smtps
               containerPort: 465
+            {{- end }}
+            {{- if .Values.service.mail.enabled.imap }}
             - name: imap
               containerPort: 143
+            {{- end }}
+            {{- if .Values.service.mail.enabled.imaps }}
             - name: imaps
               containerPort: 993
+            {{- end }}
+            {{- if .Values.service.mail.enabled.sieve }}
             - name: sieve
               containerPort: 4190
+            {{- end }}
           envFrom:
             - secretRef:
                 name: {{ .Values.secret.name }}
