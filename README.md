@@ -532,7 +532,13 @@ service:
 
 By default this chart exposes HTTP (`service.http.port`) and HTTPS (`443`) on the same Service.
 Set `service.http.enabled=false` to remove HTTP (`8080`) entirely.
-For Hetzner users, this often exceeds `lb11` listener capacity; use:
+Hetzner-specific sizing guidance:
+
+- `lb11` can be enough for reduced listener sets (for example when both `imap` and `sieve` are disabled).
+- If you keep broader listener coverage (especially with IMAP/Sieve enabled), use `lb21`.
+- This guidance is specific to Hetzner LB listener limits; other providers have different limits.
+
+Use `lb21` on Hetzner when needed:
 
 ```yaml
 service:
