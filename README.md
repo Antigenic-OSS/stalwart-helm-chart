@@ -1,13 +1,20 @@
 # antigenic-stalwart-helm-chart
 
-[![Tag](https://img.shields.io/github/v/tag/Antigenic-OSS/stalwart-helm-chart?sort=semver)](https://github.com/Antigenic-OSS/stalwart-helm-chart/tags)
-[![Chart CI](https://img.shields.io/github/actions/workflow/status/Antigenic-OSS/stalwart-helm-chart/chart-ci.yaml?label=chart%20ci)](https://github.com/Antigenic-OSS/stalwart-helm-chart/actions/workflows/chart-ci.yaml)
-[![Publish OCI](https://img.shields.io/github/actions/workflow/status/Antigenic-OSS/stalwart-helm-chart/release-chart.yaml?label=publish%20oci)](https://github.com/Antigenic-OSS/stalwart-helm-chart/actions/workflows/release-chart.yaml)
-[![GHCR](https://img.shields.io/badge/oci-ghcr.io%2Fantigenic--oss%2Fcharts-blue)](https://github.com/orgs/Antigenic-OSS/packages?repo_name=stalwart-helm-chart)
-[![License](https://img.shields.io/github/license/Antigenic-OSS/stalwart-helm-chart)](https://github.com/Antigenic-OSS/stalwart-helm-chart/blob/main/LICENSE)
-[![Helm](https://img.shields.io/badge/helm-v3-blueviolet)](https://helm.sh/)
-[![Kubernetes](https://img.shields.io/badge/kubernetes-supported-326CE5)](https://kubernetes.io/)
-[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/antigenic-stalwart-helm-chart)](https://artifacthub.io/packages/search?repo=antigenic-stalwart-helm-chart)
+<p align="center">
+  <a href="https://github.com/Antigenic-OSS/stalwart-helm-chart/tags"><img alt="Tag" src="https://img.shields.io/github/v/tag/Antigenic-OSS/stalwart-helm-chart?sort=semver&style=flat-square"></a>
+  <a href="https://github.com/stalwartlabs/mail-server/releases/tag/v0.15.5"><img alt="Stalwart App Version" src="https://img.shields.io/badge/stalwart-v0.15.5-informational?style=flat-square"></a>
+  <a href="https://github.com/Antigenic-OSS/stalwart-helm-chart/actions/workflows/chart-ci.yaml"><img alt="Chart CI" src="https://img.shields.io/github/actions/workflow/status/Antigenic-OSS/stalwart-helm-chart/chart-ci.yaml?branch=main&label=chart%20ci&style=flat-square"></a>
+  <a href="https://github.com/Antigenic-OSS/stalwart-helm-chart/actions/workflows/auto-tag-chart.yaml"><img alt="Auto Tag" src="https://img.shields.io/github/actions/workflow/status/Antigenic-OSS/stalwart-helm-chart/auto-tag-chart.yaml?branch=main&label=auto%20tag&style=flat-square"></a>
+  <a href="https://github.com/Antigenic-OSS/stalwart-helm-chart/actions/workflows/release-chart.yaml"><img alt="Publish OCI" src="https://img.shields.io/github/actions/workflow/status/Antigenic-OSS/stalwart-helm-chart/release-chart.yaml?label=publish%20oci&style=flat-square"></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/orgs/Antigenic-OSS/packages?repo_name=stalwart-helm-chart"><img alt="GHCR" src="https://img.shields.io/badge/oci-ghcr.io%2Fantigenic--oss%2Fcharts-blue?style=flat-square"></a>
+  <a href="https://artifacthub.io/packages/search?repo=antigenic-stalwart-helm-chart"><img alt="Artifact Hub" src="https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/antigenic-stalwart-helm-chart&style=flat-square"></a>
+  <a href="https://kubernetes.io/"><img alt="Kubernetes" src="https://img.shields.io/badge/kubernetes-supported-326ce5?style=flat-square&logo=kubernetes&logoColor=white"></a>
+  <a href="https://helm.sh/"><img alt="Helm" src="https://img.shields.io/badge/helm-v3-0f1689?style=flat-square&logo=helm&logoColor=white"></a>
+  <a href="https://github.com/Antigenic-OSS/stalwart-helm-chart/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/Antigenic-OSS/stalwart-helm-chart?style=flat-square"></a>
+</p>
 
 Community-maintained, highly opinionated Helm chart for deploying the Stalwart Mail Server on Kubernetes.
 
