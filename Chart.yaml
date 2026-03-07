@@ -49,6 +49,6 @@ annotations:
       url: https://github.com/Antigenic-OSS/stalwart-helm-chart/blob/main/SUPPORT.md
   artifacthub.io/containsSecurityUpdates: "false"
 maintainers:
-  - name: Antigenic Research Institute
+  - name: Antigenic Technologies Inc.
     email: oss@antigenic.org
     url: https://antigenic.org
