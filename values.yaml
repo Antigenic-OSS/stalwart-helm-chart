@@ -90,6 +90,17 @@ networkPolicy:
       - ::/0
     additionalFrom: []
 
+ciliumEgressGatewayPolicy:
+  enabled: false
+  name: ""
+  selectors: []
+  destinationCIDRs:
+    - 0.0.0.0/0
+  excludedCIDRs: []
+  egressGateway:
+    nodeSelector: {}
+    egressIP: ""
+
 ingress:
   enabled: false
   className: ""

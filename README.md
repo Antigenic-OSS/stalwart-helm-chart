@@ -51,6 +51,7 @@ This is an unofficial, community-maintained Helm chart and is not affiliated wit
   - [Proxy Protocol and Trusted Networks](#proxy-protocol-and-trusted-networks)
   - [Allowed IPs vs Blocked IPs Ownership](#allowed-ips-vs-blocked-ips-ownership)
   - [NetworkPolicy](#networkpolicy)
+  - [Cilium Egress Gateway Policy](#cilium-egress-gateway-policy)
 - [Observability](#observability)
   - [Prometheus Metrics](#prometheus-metrics)
 - [Operational Notes](#operational-notes)
@@ -611,6 +612,27 @@ If `networkPolicy.enabled=true`, this chart keeps services internet-reachable by
 This is a compatibility-first default, not a strict zero-trust posture.
 
 Harden this by replacing `networkPolicy.ingress.internetCidrs` and/or using `networkPolicy.ingress.additionalFrom` for your specific ingress/LB source ranges, and by restricting egress rules to required dependencies.
+
+### Cilium Egress Gateway Policy
+
+If you run Cilium with the `CiliumEgressGatewayPolicy` CRD installed, this chart can optionally render a dedicated egress gateway policy for the Stalwart pods.
+
+Enable it with values like:
+
+```yaml
+ciliumEgressGatewayPolicy:
+  enabled: true
+  name: stalwart-egress-ipv4
+  destinationCIDRs:
+    - 0.0.0.0/0
+  egressGateway:
+    nodeSelector:
+      matchLabels:
+        egress-node: "true"
+    egressIP: 203.0.113.10
+```
+
+By default, the chart targets the Stalwart pods using this chart's own selector labels. If you need a different Cilium selector shape, set `ciliumEgressGatewayPolicy.selectors` directly.
 
 ## Observability
 

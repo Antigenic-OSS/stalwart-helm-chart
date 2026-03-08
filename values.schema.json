@@ -402,6 +402,37 @@
         }
       }
     },
+    "ciliumEgressGatewayPolicy": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "name": { "type": "string" },
+        "selectors": {
+          "type": "array",
+          "items": { "type": "object" }
+        },
+        "destinationCIDRs": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "excludedCIDRs": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "egressGateway": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "nodeSelector": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "egressIP": { "type": "string" }
+          }
+        }
+      }
+    },
     "startupProbe": {
       "type": "object",
       "additionalProperties": true
